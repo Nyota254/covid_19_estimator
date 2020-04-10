@@ -7,17 +7,17 @@ def estimator(data):
   Args:
       Dictionary data such as the example below.
       {
-        region: {
-        name: "Africa",
-        avgAge: 19.7,
-        avgDailyIncomeInUSD: 5,
-        avgDailyIncomePopulation: 0.71
+        'region': {
+        'name': "Africa",
+        'avgAge': 19.7,
+        'avgDailyIncomeInUSD': 4,
+        'avgDailyIncomePopulation': 0.73
         },
-        periodType: "days",
-        timeToElapse: 58,
-        reportedCases: 674,
-        population: 66622705,
-        totalHospitalBeds: 1380614
+        'periodType': "days",
+        'timeToElapse': 38,
+        'reportedCases': 2747,
+        'population': 92931687,
+        'totalHospitalBeds': 678874
       }
   '''
   #original data storage
@@ -56,6 +56,23 @@ def estimator(data):
   hospitalBedsByRequestedTimeImpact = availableBeds - severeCasesByRequestedTimeImpact
   hospitalBedsByRequestedTimeSeverImpact = availableBeds - severeCasesByRequestedTimeSevereImpact
 
+  #Start of calculation for ICU cases
+
+  casesForICUByRequestedTimeImpact = int(0.5 * infectionsByRequestedTimeImpact)
+  casesForICUByRequestedTimeSeverImpact = int(0.5 * infectionsByRequestedTimeSeverImpact)
+
+  #Ventilator Requirements
+  casesForVentilatorsByRequestedTimeImpact = int(0.2 * infectionsByRequestedTimeImpact)
+  casesForVentilatorsByRequestedTimeSeverImpact = int(0.2 * infectionsByRequestedTimeSeverImpact)
+
+  #Economy loss calculation 
+
+  difImpact = infectionsByRequestedTimeImpact * data['region']['avgDailyIncomePopulation'] * data['region']['avgDailyIncomeInUSD'] * data['timeToElapse']
+  difSI = infectionsByRequestedTimeSeverImpact * data['region']['avgDailyIncomePopulation'] * data['region']['avgDailyIncomeInUSD'] * data['timeToElapse'] 
+
+  dollarsInFlightImpact = round(difImpact,2)
+  dollarsInFlightSeverImpact = round(difSI,2)
+
   # data to be returned inform of a dictionary
   data = {'data':{'region': {
                               'name': originalData['region']['name'],
@@ -73,13 +90,19 @@ def estimator(data):
                         'impact':{'currentlyInfected': currentlyInfectedImpact,
                                 'infectionsByRequestedTime': infectionsByRequestedTimeImpact,
                                 'severeCasesByRequestedTime': severeCasesByRequestedTimeImpact,
-                                'hospitalBedsByRequestedTime': hospitalBedsByRequestedTimeImpact
+                                'hospitalBedsByRequestedTime': hospitalBedsByRequestedTimeImpact,
+                                'casesForICUByRequestedTime': casesForICUByRequestedTimeImpact,
+                                'casesForVentilatorsByRequestedTime':casesForVentilatorsByRequestedTimeImpact,
+                                'dollarsInFlight': dollarsInFlightImpact
                         },
 
-                        'severImpact':{'currentlyInfected':currentlyInfectedSeverImpact,
+                        'severeImpact':{'currentlyInfected':currentlyInfectedSeverImpact,
                                       'infectionsByRequestedTime': infectionsByRequestedTimeSeverImpact,
                                       'severeCasesByRequestedTime':severeCasesByRequestedTimeSevereImpact,
-                                      'hospitalBedsByRequestedTime': hospitalBedsByRequestedTimeSeverImpact
+                                      'hospitalBedsByRequestedTime': hospitalBedsByRequestedTimeSeverImpact,
+                                      'casesForICUByRequestedTime': casesForICUByRequestedTimeSeverImpact,
+                                      'casesForVentilatorsByRequestedTime':casesForVentilatorsByRequestedTimeSeverImpact,
+                                      'dollarsInFlight': dollarsInFlightSeverImpact
                         }
           }
   }
