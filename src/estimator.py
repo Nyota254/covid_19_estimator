@@ -5,7 +5,7 @@ def estimator(data):
   and studys by Havard Medical School and Massachusetts General Hospital
 
   Args:
-      Dictionary such as the example below.
+      Dictionary data such as the example below.
       {
         region: {
         name: "Africa",
@@ -29,7 +29,7 @@ def estimator(data):
   currentlyInfectedSeverImpact = data['reportedCases'] * 50
 
   
-  # Start of calculations for infections by requested time factoring in one will use
+  # Start of calculations for infections by requested time. factoring in one will use
   # days,weeks and months
 
   if data['periodType'] is "weeks":
@@ -45,6 +45,16 @@ def estimator(data):
   infectionsByRequestedTimeImpact = int(currentlyInfectedImpact * (2**powerNumber))
   infectionsByRequestedTimeSeverImpact = int(currentlyInfectedSeverImpact * (2**powerNumber))
 
+  #Start of calculations for severcases of infection that will require hospitalization
+
+  severeCasesByRequestedTimeImpact = int(0.15 * infectionsByRequestedTimeImpact)
+  severeCasesByRequestedTimeSevereImpact = int(0.15 * infectionsByRequestedTimeSeverImpact)
+
+  #Start of calculation for number of hospital beds available for covid_19 Patients at requested time
+  
+  availableBeds = int(0.35 * data['totalHospitalBeds'])
+  hospitalBedsByRequestedTimeImpact = availableBeds - severeCasesByRequestedTimeImpact
+  hospitalBedsByRequestedTimeSeverImpact = availableBeds - severeCasesByRequestedTimeSevereImpact
 
   # data to be returned inform of a dictionary
   data = {'data':{'region': {
@@ -62,10 +72,14 @@ def estimator(data):
           'estimate':{
                         'impact':{'currentlyInfected': currentlyInfectedImpact,
                                 'infectionsByRequestedTime': infectionsByRequestedTimeImpact,
+                                'severeCasesByRequestedTime': severeCasesByRequestedTimeImpact,
+                                'hospitalBedsByRequestedTime': hospitalBedsByRequestedTimeImpact
                         },
 
                         'severImpact':{'currentlyInfected':currentlyInfectedSeverImpact,
                                       'infectionsByRequestedTime': infectionsByRequestedTimeSeverImpact,
+                                      'severeCasesByRequestedTime':severeCasesByRequestedTimeSevereImpact,
+                                      'hospitalBedsByRequestedTime': hospitalBedsByRequestedTimeSeverImpact
                         }
           }
   }
