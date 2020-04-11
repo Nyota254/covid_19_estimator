@@ -1,4 +1,4 @@
-from math import trunc
+
 def estimator(data):
   '''
   Method for impact estimation on the covid_19 pandemic based on calculations
@@ -52,14 +52,14 @@ def estimator(data):
 
   #Start of calculation for number of hospital beds available for covid_19 Patients at requested time
 
-  availableBeds = int(0.35 * data['totalHospitalBeds'])
-  hospitalBedsByRequestedTimeImpact = availableBeds - severeCasesByRequestedTimeImpact
-  hospitalBedsByRequestedTimeSeverImpact = availableBeds - severeCasesByRequestedTimeSevereImpact
+  availableBeds = 0.35 * data['totalHospitalBeds']
+  hospitalBedsByRequestedTimeImpact = int(availableBeds - severeCasesByRequestedTimeImpact)
+  hospitalBedsByRequestedTimeSeverImpact = int(availableBeds - severeCasesByRequestedTimeSevereImpact)
 
   #Start of calculation for ICU cases
 
-  casesForICUByRequestedTimeImpact = trunc(0.5 * infectionsByRequestedTimeImpact)
-  casesForICUByRequestedTimeSeverImpact = trunc(0.5 * infectionsByRequestedTimeSeverImpact)
+  casesForICUByRequestedTimeImpact = int(0.5 * infectionsByRequestedTimeImpact)
+  casesForICUByRequestedTimeSeverImpact = int(0.5 * infectionsByRequestedTimeSeverImpact)
 
   #Ventilator Requirements
   casesForVentilatorsByRequestedTimeImpact = int(0.2 * infectionsByRequestedTimeImpact)
