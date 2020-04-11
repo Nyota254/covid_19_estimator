@@ -1,4 +1,4 @@
-
+from math import trunc
 def estimator(data):
   '''
   Method for impact estimation on the covid_19 pandemic based on calculations
@@ -25,8 +25,8 @@ def estimator(data):
 
   #Calculations for Currently infected
 
-  currentlyInfectedImpact = int(data['reportedCases'] * 10)
-  currentlyInfectedSeverImpact = int(data['reportedCases'] * 50)
+  currentlyInfectedImpact = trunc(data['reportedCases'] * 10)
+  currentlyInfectedSeverImpact = trunc(data['reportedCases'] * 50)
 
 
   # Start of calculations for infections by requested time. factoring in one will use
@@ -41,29 +41,29 @@ def estimator(data):
   else:
     pass
 
-  powerNumber = int(data['timeToElapse']/3)
-  infectionsByRequestedTimeImpact = int(currentlyInfectedImpact * (2**powerNumber))
-  infectionsByRequestedTimeSeverImpact = int(currentlyInfectedSeverImpact * (2**powerNumber))
+  powerNumber = trunc(data['timeToElapse']/3)
+  infectionsByRequestedTimeImpact = trunc(currentlyInfectedImpact * (2**powerNumber))
+  infectionsByRequestedTimeSeverImpact = trunc(currentlyInfectedSeverImpact * (2**powerNumber))
 
   #Start of calculations for severcases of infection that will require hospitalization
 
-  severeCasesByRequestedTimeImpact = int(0.15 * infectionsByRequestedTimeImpact)
-  severeCasesByRequestedTimeSevereImpact = int(0.15 * infectionsByRequestedTimeSeverImpact)
+  severeCasesByRequestedTimeImpact = trunc(0.15 * infectionsByRequestedTimeImpact)
+  severeCasesByRequestedTimeSevereImpact = trunc(0.15 * infectionsByRequestedTimeSeverImpact)
 
   #Start of calculation for number of hospital beds available for covid_19 Patients at requested time
 
   availableBeds = 0.35 * data['totalHospitalBeds']
-  hospitalBedsByRequestedTimeImpact = int(availableBeds - severeCasesByRequestedTimeImpact)
-  hospitalBedsByRequestedTimeSeverImpact = int(availableBeds - severeCasesByRequestedTimeSevereImpact)
+  hospitalBedsByRequestedTimeImpact = trunc(availableBeds - severeCasesByRequestedTimeImpact)
+  hospitalBedsByRequestedTimeSeverImpact = trunc(availableBeds - severeCasesByRequestedTimeSevereImpact)
 
   #Start of calculation for ICU cases
 
-  casesForICUByRequestedTimeImpact = int(0.5 * infectionsByRequestedTimeImpact)
-  casesForICUByRequestedTimeSeverImpact = int(0.5 * infectionsByRequestedTimeSeverImpact)
+  casesForICUByRequestedTimeImpact = trunc(0.5 * infectionsByRequestedTimeImpact)
+  casesForICUByRequestedTimeSeverImpact = trunc(0.5 * infectionsByRequestedTimeSeverImpact)
 
   #Ventilator Requirements
-  casesForVentilatorsByRequestedTimeImpact = int(0.2 * infectionsByRequestedTimeImpact)
-  casesForVentilatorsByRequestedTimeSeverImpact = int(0.2 * infectionsByRequestedTimeSeverImpact)
+  casesForVentilatorsByRequestedTimeImpact = trunc(0.2 * infectionsByRequestedTimeImpact)
+  casesForVentilatorsByRequestedTimeSeverImpact = trunc(0.2 * infectionsByRequestedTimeSeverImpact)
 
   #Economy loss calculation
 
