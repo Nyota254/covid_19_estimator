@@ -1,4 +1,3 @@
-from math import trunc
 
 def estimator(data):
   '''
@@ -26,8 +25,8 @@ def estimator(data):
 
   #Calculations for Currently infected
 
-  currentlyInfectedImpact = trunc(data['reportedCases'] * 10)
-  currentlyInfectedSeverImpact = trunc(data['reportedCases'] * 50)
+  currentlyInfectedImpact = int(data['reportedCases'] * 10)
+  currentlyInfectedSeverImpact = int(data['reportedCases'] * 50)
 
 
   # Start of calculations for infections by requested time. factoring in one will use
@@ -42,43 +41,34 @@ def estimator(data):
   else:
     pass
 
-  powerNumber = trunc(data['timeToElapse']/3)
-  infectionsByRequestedTimeImpact = trunc(currentlyInfectedImpact * (2**powerNumber))
-  infectionsByRequestedTimeSeverImpact = trunc(currentlyInfectedSeverImpact * (2**powerNumber))
+  powerNumber = int(data['timeToElapse']/3)
+  infectionsByRequestedTimeImpact = int(currentlyInfectedImpact * (2**powerNumber))
+  infectionsByRequestedTimeSeverImpact = int(currentlyInfectedSeverImpact * (2**powerNumber))
 
   #Start of calculations for severcases of infection that will require hospitalization
 
-  severeCasesByRequestedTimeImpact = trunc(0.15 * infectionsByRequestedTimeImpact)
-  severeCasesByRequestedTimeSevereImpact = trunc(0.15 * infectionsByRequestedTimeSeverImpact)
+  severeCasesByRequestedTimeImpact = int(0.15 * infectionsByRequestedTimeImpact)
+  severeCasesByRequestedTimeSevereImpact = int(0.15 * infectionsByRequestedTimeSeverImpact)
 
   #Start of calculation for number of hospital beds available for covid_19 Patients at requested time
 
   availableBeds = 0.35 * data['totalHospitalBeds']
-  hospitalBedsByRequestedTimeImpact = trunc(availableBeds - severeCasesByRequestedTimeImpact)
-  hospitalBedsByRequestedTimeSeverImpact = trunc(availableBeds - severeCasesByRequestedTimeSevereImpact)
+  hospitalBedsByRequestedTimeImpact = int(availableBeds - severeCasesByRequestedTimeImpact)
+  hospitalBedsByRequestedTimeSeverImpact = int(availableBeds - severeCasesByRequestedTimeSevereImpact)
 
   #Start of calculation for ICU cases
 
-<<<<<<< HEAD
   casesForICUByRequestedTimeImpact = int(0.05 * infectionsByRequestedTimeImpact)
   casesForICUByRequestedTimeSeverImpact = int(0.05 * infectionsByRequestedTimeSeverImpact)
 
   #Ventilator Requirements
   casesForVentilatorsByRequestedTimeImpact = int(0.02 * infectionsByRequestedTimeImpact)
   casesForVentilatorsByRequestedTimeSeverImpact = int(0.02 * infectionsByRequestedTimeSeverImpact)
-=======
-  casesForICUByRequestedTimeImpact = trunc(0.5 * infectionsByRequestedTimeImpact)
-  casesForICUByRequestedTimeSeverImpact = trunc(0.5 * infectionsByRequestedTimeSeverImpact)
-
-  #Ventilator Requirements
-  casesForVentilatorsByRequestedTimeImpact = trunc(0.2 * infectionsByRequestedTimeImpact)
-  casesForVentilatorsByRequestedTimeSeverImpact = trunc(0.2 * infectionsByRequestedTimeSeverImpact)
->>>>>>> parent of 325a8f4... revert to int usage
 
   #Economy loss calculation
 
-  dollarsInFlightImpact = trunc((infectionsByRequestedTimeImpact * data['region']['avgDailyIncomePopulation'] * data['region']['avgDailyIncomeInUSD']) / data['timeToElapse'])
-  dollarsInFlightSeverImpact = trunc((infectionsByRequestedTimeSeverImpact * data['region']['avgDailyIncomePopulation'] * data['region']['avgDailyIncomeInUSD']) / data['timeToElapse'])
+  dollarsInFlightImpact = int((infectionsByRequestedTimeImpact * data['region']['avgDailyIncomePopulation'] * data['region']['avgDailyIncomeInUSD']) / data['timeToElapse'])
+  dollarsInFlightSeverImpact = int((infectionsByRequestedTimeSeverImpact * data['region']['avgDailyIncomePopulation'] * data['region']['avgDailyIncomeInUSD']) / data['timeToElapse'])
 
   # data to be returned inform of a dictionary
   data = {'data':{'region': {
