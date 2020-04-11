@@ -67,8 +67,8 @@ def estimator(data):
 
   #Economy loss calculation
 
-  difImpact = infectionsByRequestedTimeImpact * data['region']['avgDailyIncomePopulation'] * data['region']['avgDailyIncomeInUSD'] * data['timeToElapse']
-  difSI = infectionsByRequestedTimeSeverImpact * data['region']['avgDailyIncomePopulation'] * data['region']['avgDailyIncomeInUSD'] * data['timeToElapse']
+  difImpact = (infectionsByRequestedTimeImpact * data['region']['avgDailyIncomePopulation'] * data['region']['avgDailyIncomeInUSD']) / data['timeToElapse']
+  difSI = (infectionsByRequestedTimeSeverImpact * data['region']['avgDailyIncomePopulation'] * data['region']['avgDailyIncomeInUSD']) / data['timeToElapse']
 
   dollarsInFlightImpact = round(difImpact,2)
   dollarsInFlightSeverImpact = round(difSI,2)
