@@ -68,8 +68,8 @@ def estimator(data):
 
   #Economy loss calculation
 
-  dollarsInFlightImpact = int((infectionsByRequestedTimeImpact * data['region']['avgDailyIncomePopulation'] * data['region']['avgDailyIncomeInUSD']) / data['timeToElapse'])
-  dollarsInFlightSeverImpact = int((infectionsByRequestedTimeSeverImpact * data['region']['avgDailyIncomePopulation'] * data['region']['avgDailyIncomeInUSD']) / data['timeToElapse'])
+  dollarsInFlightImpact = trunc((infectionsByRequestedTimeImpact * data['region']['avgDailyIncomePopulation'] * data['region']['avgDailyIncomeInUSD']) / data['timeToElapse'])
+  dollarsInFlightSeverImpact = trunc((infectionsByRequestedTimeSeverImpact * data['region']['avgDailyIncomePopulation'] * data['region']['avgDailyIncomeInUSD']) / data['timeToElapse'])
 
   # data to be returned inform of a dictionary
   data = {'data':{'region': {
