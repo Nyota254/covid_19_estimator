@@ -32,10 +32,10 @@ def estimator(data):
   # Start of calculations for infections by requested time. factoring in one will use
   # days,weeks and months
 
-  if data['periodType'] is "weeks":
+  if data['periodType'] == "weeks":
     data['timeToElapse'] = data['timeToElapse'] * 7
 
-  elif data['periodType'] is "months":
+  elif data['periodType'] == "months":
     data['timeToElapse'] = data['timeToElapse'] * 30
 
   else:
