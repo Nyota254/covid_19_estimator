@@ -1,4 +1,4 @@
-
+from math import trunc
 def estimator(data):
   '''
   Method for impact estimation on the covid_19 pandemic based on calculations
@@ -28,7 +28,7 @@ def estimator(data):
   currentlyInfectedImpact = int(data['reportedCases'] * 10)
   currentlyInfectedSeverImpact = int(data['reportedCases'] * 50)
 
-  
+
   # Start of calculations for infections by requested time. factoring in one will use
   # days,weeks and months
 
@@ -51,24 +51,24 @@ def estimator(data):
   severeCasesByRequestedTimeSevereImpact = int(0.15 * infectionsByRequestedTimeSeverImpact)
 
   #Start of calculation for number of hospital beds available for covid_19 Patients at requested time
-  
+
   availableBeds = int(0.35 * data['totalHospitalBeds'])
   hospitalBedsByRequestedTimeImpact = availableBeds - severeCasesByRequestedTimeImpact
   hospitalBedsByRequestedTimeSeverImpact = availableBeds - severeCasesByRequestedTimeSevereImpact
 
   #Start of calculation for ICU cases
 
-  casesForICUByRequestedTimeImpact = int(0.5 * infectionsByRequestedTimeImpact)
-  casesForICUByRequestedTimeSeverImpact = int(0.5 * infectionsByRequestedTimeSeverImpact)
+  casesForICUByRequestedTimeImpact = trunc(0.5 * infectionsByRequestedTimeImpact)
+  casesForICUByRequestedTimeSeverImpact = trunc(0.5 * infectionsByRequestedTimeSeverImpact)
 
   #Ventilator Requirements
   casesForVentilatorsByRequestedTimeImpact = int(0.2 * infectionsByRequestedTimeImpact)
   casesForVentilatorsByRequestedTimeSeverImpact = int(0.2 * infectionsByRequestedTimeSeverImpact)
 
-  #Economy loss calculation 
+  #Economy loss calculation
 
   difImpact = infectionsByRequestedTimeImpact * data['region']['avgDailyIncomePopulation'] * data['region']['avgDailyIncomeInUSD'] * data['timeToElapse']
-  difSI = infectionsByRequestedTimeSeverImpact * data['region']['avgDailyIncomePopulation'] * data['region']['avgDailyIncomeInUSD'] * data['timeToElapse'] 
+  difSI = infectionsByRequestedTimeSeverImpact * data['region']['avgDailyIncomePopulation'] * data['region']['avgDailyIncomeInUSD'] * data['timeToElapse']
 
   dollarsInFlightImpact = round(difImpact,2)
   dollarsInFlightSeverImpact = round(difSI,2)
@@ -86,7 +86,7 @@ def estimator(data):
                   'population': originalData['population'],
                   'totalHospitalBeds': originalData['totalHospitalBeds']
           },
-          
+
                         'impact':{'currentlyInfected': currentlyInfectedImpact,
                                 'infectionsByRequestedTime': infectionsByRequestedTimeImpact,
                                 'severeCasesByRequestedTime': severeCasesByRequestedTimeImpact,
