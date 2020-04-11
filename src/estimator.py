@@ -86,7 +86,7 @@ def estimator(data):
                   'population': originalData['population'],
                   'totalHospitalBeds': originalData['totalHospitalBeds']
           },
-          'estimate':{
+          
                         'impact':{'currentlyInfected': currentlyInfectedImpact,
                                 'infectionsByRequestedTime': infectionsByRequestedTimeImpact,
                                 'severeCasesByRequestedTime': severeCasesByRequestedTimeImpact,
@@ -104,7 +104,6 @@ def estimator(data):
                                       'casesForVentilatorsByRequestedTime':casesForVentilatorsByRequestedTimeSeverImpact,
                                       'dollarsInFlight': dollarsInFlightSeverImpact
                         }
-          }
   }
 
   return data
