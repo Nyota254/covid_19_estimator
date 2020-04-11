@@ -25,8 +25,8 @@ def estimator(data):
 
   #Calculations for Currently infected
 
-  currentlyInfectedImpact = data['reportedCases'] * 10
-  currentlyInfectedSeverImpact = data['reportedCases'] * 50
+  currentlyInfectedImpact = int(data['reportedCases'] * 10)
+  currentlyInfectedSeverImpact = int(data['reportedCases'] * 50)
 
   
   # Start of calculations for infections by requested time. factoring in one will use
