@@ -1,4 +1,18 @@
 
+data =     {
+        'region': {
+        'name': "Africa",
+        'avgAge': 19.7,
+        'avgDailyIncomeInUSD': 4,
+        'avgDailyIncomePopulation': 0.73
+        },
+        'periodType': "days",
+        'timeToElapse': 38,
+        'reportedCases': 2747,
+        'population': 92931687,
+        'totalHospitalBeds': 678874
+      }
+
 def estimator(data):
   '''
   Method for impact estimation on the covid_19 pandemic based on calculations
@@ -58,12 +72,12 @@ def estimator(data):
 
   #Start of calculation for ICU cases
 
-  casesForICUByRequestedTimeImpact = int(0.5 * infectionsByRequestedTimeImpact)
-  casesForICUByRequestedTimeSeverImpact = int(0.5 * infectionsByRequestedTimeSeverImpact)
+  casesForICUByRequestedTimeImpact = int(0.05 * infectionsByRequestedTimeImpact)
+  casesForICUByRequestedTimeSeverImpact = int(0.05 * infectionsByRequestedTimeSeverImpact)
 
   #Ventilator Requirements
-  casesForVentilatorsByRequestedTimeImpact = int(0.2 * infectionsByRequestedTimeImpact)
-  casesForVentilatorsByRequestedTimeSeverImpact = int(0.2 * infectionsByRequestedTimeSeverImpact)
+  casesForVentilatorsByRequestedTimeImpact = int(0.02 * infectionsByRequestedTimeImpact)
+  casesForVentilatorsByRequestedTimeSeverImpact = int(0.02 * infectionsByRequestedTimeSeverImpact)
 
   #Economy loss calculation
 
@@ -104,3 +118,5 @@ def estimator(data):
   }
 
   return data
+
+print(estimator(data))
